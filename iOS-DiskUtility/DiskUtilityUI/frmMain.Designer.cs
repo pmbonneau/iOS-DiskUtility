@@ -44,6 +44,8 @@
             this.btnExtendPartitionTable = new System.Windows.Forms.Button();
             this.lblMaxEntries = new System.Windows.Forms.Label();
             this.txtMaxEntries = new System.Windows.Forms.TextBox();
+            this.lblDeviceIpAddress = new System.Windows.Forms.Label();
+            this.txtDeviceIpAddress = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // btnResizeHFS
@@ -112,7 +114,7 @@
             // 
             this.lblNewPartitionSize.AutoSize = true;
             this.lblNewPartitionSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblNewPartitionSize.Location = new System.Drawing.Point(176, 226);
+            this.lblNewPartitionSize.Location = new System.Drawing.Point(195, 226);
             this.lblNewPartitionSize.Name = "lblNewPartitionSize";
             this.lblNewPartitionSize.Size = new System.Drawing.Size(71, 16);
             this.lblNewPartitionSize.TabIndex = 6;
@@ -121,7 +123,7 @@
             // txtNewPartitionSize
             // 
             this.txtNewPartitionSize.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtNewPartitionSize.Location = new System.Drawing.Point(253, 223);
+            this.txtNewPartitionSize.Location = new System.Drawing.Point(272, 223);
             this.txtNewPartitionSize.Name = "txtNewPartitionSize";
             this.txtNewPartitionSize.Size = new System.Drawing.Size(71, 22);
             this.txtNewPartitionSize.TabIndex = 7;
@@ -202,11 +204,31 @@
             this.txtMaxEntries.Size = new System.Drawing.Size(71, 22);
             this.txtMaxEntries.TabIndex = 15;
             // 
+            // lblDeviceIpAddress
+            // 
+            this.lblDeviceIpAddress.AutoSize = true;
+            this.lblDeviceIpAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblDeviceIpAddress.Location = new System.Drawing.Point(195, 26);
+            this.lblDeviceIpAddress.Name = "lblDeviceIpAddress";
+            this.lblDeviceIpAddress.Size = new System.Drawing.Size(126, 16);
+            this.lblDeviceIpAddress.TabIndex = 16;
+            this.lblDeviceIpAddress.Text = "Device IP Address :";
+            // 
+            // txtDeviceIpAddress
+            // 
+            this.txtDeviceIpAddress.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtDeviceIpAddress.Location = new System.Drawing.Point(327, 23);
+            this.txtDeviceIpAddress.Name = "txtDeviceIpAddress";
+            this.txtDeviceIpAddress.Size = new System.Drawing.Size(122, 22);
+            this.txtDeviceIpAddress.TabIndex = 17;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(513, 400);
+            this.Controls.Add(this.txtDeviceIpAddress);
+            this.Controls.Add(this.lblDeviceIpAddress);
             this.Controls.Add(this.txtMaxEntries);
             this.Controls.Add(this.lblMaxEntries);
             this.Controls.Add(this.btnExtendPartitionTable);
@@ -248,6 +270,8 @@
         private System.Windows.Forms.Button btnExtendPartitionTable;
         private System.Windows.Forms.Label lblMaxEntries;
         private System.Windows.Forms.TextBox txtMaxEntries;
+        private System.Windows.Forms.Label lblDeviceIpAddress;
+        private System.Windows.Forms.TextBox txtDeviceIpAddress;
     }
 }
 

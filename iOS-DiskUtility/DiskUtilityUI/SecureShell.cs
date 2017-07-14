@@ -18,9 +18,9 @@ namespace DiskUtilityUI
                 sessionOptions = new SessionOptions
                 {
                     Protocol = Protocol.Sftp,
-                    HostName = "192.168.32.20",
-                    UserName = "root",
-                    Password = "alpine"
+                    HostName = "",
+                    UserName = "",
+                    Password = ""
                 };
 
                 sessionOptions.GiveUpSecurityAndAcceptAnySshHostKey = true;

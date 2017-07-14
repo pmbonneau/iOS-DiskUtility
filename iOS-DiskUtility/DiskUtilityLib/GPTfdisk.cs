@@ -22,12 +22,12 @@ namespace DiskUtilityLib
 
         public string getConsoleOutputPartitionUniqueGUID(string PartitionNumber)
         {
-            return "echo -e \"/dev/rdisk0s1\ni\n2\n\" | gptfdisk";
+            return "echo -e \"/dev/rdisk0s1\ni\n" + PartitionNumber + "\n\" | gptfdisk";
         }
 
-        public string getConsoleOutputPartitionEndSector(string PartitionNumber)
+        public string getConsoleOutputPartitionFirstSector(string PartitionNumber)
         {
-            return "echo -e \"/dev/rdisk0s1\nn\n\" | gptfdisk";
+            return "echo -e \"/dev/rdisk0s1\ni\n" + PartitionNumber + "\n\" | gptfdisk";
         }
 
         public string ExpandPartitionTable(string MaxEntries)
@@ -42,9 +42,17 @@ namespace DiskUtilityLib
             return "echo -e \"/dev/rdisk0s1\nn\n\n" + Convert.ToString(EndSector) + "\n\nc\n" + PartitionNumber + "\n" + PartitionName + "\nw\ny" + " | gptfdisk";
         }
 
-        public string CreateNewPartition(string PartitionNumber, int NewSizeInMB, string PartitionUniqueGUID)
+        public string AdjustDeviceDataPartition(int FirstSector, int NewSizeInMB, string PartitionUniqueGUID)
         {
-            return "";
+            int NewPartitionSectorsLength = (NewSizeInMB * 1024 * 1024) / FileSystemBlockSize;
+            int EndSector = FirstSector + NewPartitionSectorsLength;
+
+            return "echo -e \"/dev/rdisk0s1\nd\n2\nn\n\n" + Convert.ToString(EndSector) + "\n\nc\n2\nData\nx\na\n2\n48\n49\n\nc\n2\n" + PartitionUniqueGUID +"\nm\nw\ny\" | gptfdisk";
+        }
+
+        public string SetPartitionAttributes(string PartitionNumber, string AttributID)
+        {
+            return "echo -e \"/dev/rdisk0s1\nx\na\n" + PartitionNumber + "\n" + AttributID + "\n\nm\nw\ny\" | gptfdisk";
         }
 
         public string DeletePartition(string PartitionNumber)

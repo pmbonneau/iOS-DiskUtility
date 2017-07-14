@@ -8,7 +8,7 @@ namespace DiskUtilityLib
 {
     public class HFSResize
     {
-        public string ResizeHFS(string MountPoint, int NewSizeInMB)
+        public string ResizeHFS(string MountPoint, long NewSizeInMB)
         {
             long NewSizeInBytes = NewSizeInMB * 1024 * 1024;
             string NewSizeArg = Convert.ToString(NewSizeInBytes);

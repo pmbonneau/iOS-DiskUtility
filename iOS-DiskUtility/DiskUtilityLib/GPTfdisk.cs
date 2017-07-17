@@ -25,27 +25,27 @@ namespace DiskUtilityLib
             return "echo -e \"/dev/rdisk0s1\ni\n" + PartitionNumber + "\n\" | gptfdisk";
         }
 
-        public string getConsoleOutputPartitionFirstSector(string PartitionNumber)
+        public string getConsoleOutputPartitionInfo(string PartitionNumber)
         {
             return "echo -e \"/dev/rdisk0s1\ni\n" + PartitionNumber + "\n\" | gptfdisk";
         }
 
         public string ExpandPartitionTable(string MaxEntries)
         {
-            return "echo -e \"/dev/rdisk0s1\nx\ns\n" + MaxEntries + "\nw\ny\" | gptfdisk";
+            return "echo -e \"/dev/rdisk0s1\nx\ns\n" + MaxEntries + "\nm\nw\ny\" | gptfdisk";
         }
 
-        public string CreateNewPartition(string PartitionName, string PartitionNumber, int FirstSector, int NewSizeInMB)
+        public string CreateNewPartition(string PartitionName, string PartitionNumber, int FirstSector, long NewSizeInMB)
         {
-            int NewPartitionSectorsLength = (NewSizeInMB * 1024 * 1024) / FileSystemBlockSize;
-            int EndSector = FirstSector + NewPartitionSectorsLength;
-            return "echo -e \"/dev/rdisk0s1\nn\n\n" + Convert.ToString(EndSector) + "\n\nc\n" + PartitionNumber + "\n" + PartitionName + "\nw\ny" + " | gptfdisk";
+            long NewPartitionSectorsLength = (NewSizeInMB * 1024 * 1024) / FileSystemBlockSize;
+            int EndSector = FirstSector + Convert.ToInt32(NewPartitionSectorsLength);
+            return "echo -e \"/dev/rdisk0s1\nx\ns\n\nm\nn\n\n\n" + Convert.ToString(EndSector) + "\n\nc\n" + PartitionNumber + "\n" + PartitionName + "\nw\ny\" | gptfdisk";
         }
 
-        public string AdjustDeviceDataPartition(int FirstSector, int NewSizeInMB, string PartitionUniqueGUID)
+        public string AdjustDeviceDataPartition(int FirstSector, long NewSizeInMB, string PartitionUniqueGUID)
         {
-            int NewPartitionSectorsLength = (NewSizeInMB * 1024 * 1024) / FileSystemBlockSize;
-            int EndSector = FirstSector + NewPartitionSectorsLength;
+            long NewPartitionSectorsLength = (NewSizeInMB * 1024 * 1024) / FileSystemBlockSize;
+            int EndSector = FirstSector + Convert.ToInt32(NewPartitionSectorsLength);
 
             return "echo -e \"/dev/rdisk0s1\nd\n2\nn\n\n" + Convert.ToString(EndSector) + "\n\nc\n2\nData\nx\na\n2\n48\n49\n\nc\n2\n" + PartitionUniqueGUID +"\nm\nw\ny\" | gptfdisk";
         }

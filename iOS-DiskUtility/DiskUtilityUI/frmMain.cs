@@ -14,6 +14,7 @@ namespace DiskUtilityUI
     public partial class frmMain : Form
     {
         SecureShell SSH;
+        int PartitionCount = 2;
 
         public frmMain()
         {
@@ -44,25 +45,34 @@ namespace DiskUtilityUI
             CommandOutput = SSH.ExecuteRemoteCommandWithOutput(GPTfdiskEditor.getConsoleOutputPartitionUniqueGUID("2"));
             PositionUniqueGUID = CommandOutput.IndexOf("GUID", CommandOutput.IndexOf("GUID")+1);
             PartitionUniqueGUID = CommandOutput.Substring(PositionUniqueGUID + 6, 36);
-            CommandOutput = SSH.ExecuteRemoteCommandWithOutput(GPTfdiskEditor.getConsoleOutputPartitionFirstSector("2"));
+            CommandOutput = SSH.ExecuteRemoteCommandWithOutput(GPTfdiskEditor.getConsoleOutputPartitionInfo("2"));
             PositionFirstSector = CommandOutput.IndexOf("First");
             PartitionFirstSectorTempString = CommandOutput.Substring(PositionFirstSector + 14, 7);
             PartitionFirstSector = Convert.ToInt32(PartitionFirstSectorTempString.TrimEnd());
-            SSH.ExecuteRemoteCommand(GPTfdiskEditor.AdjustDeviceDataPartition(PartitionFirstSector, 6000, PartitionUniqueGUID));
-            //SSH.ExecuteRemoteCommand(GPTfdiskEditor.CreateNewPartition("Data","2",);
+            SSH.ExecuteRemoteCommand(GPTfdiskEditor.AdjustDeviceDataPartition(PartitionFirstSector, 8000, PartitionUniqueGUID));
         }
 
         private void btnDeletePartition_Click(object sender, EventArgs e)
         {
             GPTfdisk GPTfdiskEditor = new GPTfdisk();
             SSH.ExecuteRemoteCommand(GPTfdiskEditor.DeletePartition(txtPartitionToDelete.Text));
+            PartitionCount--;
         }
 
         private void btnCreatePartition_Click(object sender, EventArgs e)
         {
+            PartitionCount++;
             GPTfdisk GPTfdiskEditor = new GPTfdisk();
-            string PartitionFirstSector = SSH.ExecuteRemoteCommandWithOutput(GPTfdiskEditor.getConsoleOutputPartitionFirstSector("2"));
-
+            GPTfdiskEditor.FileSystemBlockSize = 8192;
+            string PartitionLastSectorTempString;
+            int PartitionLastSector;
+            string CommandOutput = "";
+            int PositionLastSector;
+            CommandOutput = SSH.ExecuteRemoteCommandWithOutput(GPTfdiskEditor.getConsoleOutputPartitionInfo(Convert.ToString(PartitionCount - 1)));
+            PositionLastSector = CommandOutput.IndexOf("Last");
+            PartitionLastSectorTempString = CommandOutput.Substring(PositionLastSector + 13, 7);
+            PartitionLastSector = Convert.ToInt32(PartitionLastSectorTempString.TrimEnd());
+            SSH.ExecuteRemoteCommand(GPTfdiskEditor.CreateNewPartition(txtPartitionName.Text, Convert.ToString(PartitionCount), PartitionLastSector, Convert.ToInt32(txtNewPartitionSize.Text)));
         }
 
         private void btnExtendPartitionTable_Click(object sender, EventArgs e)

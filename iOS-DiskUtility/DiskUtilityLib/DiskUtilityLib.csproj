@@ -42,6 +42,8 @@
   <ItemGroup>
     <Compile Include="GPTfdisk.cs" />
     <Compile Include="HFSResize.cs" />
+    <Compile Include="Mount.cs" />
+    <Compile Include="NewFS.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

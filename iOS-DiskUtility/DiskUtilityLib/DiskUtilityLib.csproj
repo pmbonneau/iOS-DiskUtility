@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attach.cs" />
+    <Compile Include="Detach.cs" />
     <Compile Include="GPTfdisk.cs" />
     <Compile Include="HFSResize.cs" />
     <Compile Include="Mount.cs" />
